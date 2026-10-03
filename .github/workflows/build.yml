@@ -1,0 +1,27 @@
+name: Compilar APK Veda IA
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Configurar Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Compilar APK con Buildozer
+      uses: ArtemSydoryk/buildozer-action@v1
+      with:
+        command: buildozer -v android debug
+
+    - name: Subir APK generado
+      uses: actions/upload-artifact@v3
+      with:
+        name: VedaIA-APK
+        path: bin/*.apk
